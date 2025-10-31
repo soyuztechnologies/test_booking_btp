@@ -1,0 +1,61 @@
+{
+  "name": "atsmovie",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@cap-js-community/odata-v2-adapter": "^1.14.4",
+    "@sap/cds": "^8",
+    "express": "^4",
+    "@sap/xssec": "^4",
+    "@cap-js/hana": "^1"
+  },
+  "devDependencies": {
+    "@cap-js/cds-types": "^0.10.0",
+    "@cap-js/sqlite": "^1",
+    "@sap/cds-dk": "^8"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "watch-managepo": "cds watch --open managepo/webapp/index.html?sap-ui-xx-viewCache=false"
+  },
+  "sapux": [
+    "app/managepo"
+  ],
+  "cds": {
+    "requires": {
+      "[development]": {
+        "db":"sqlite",
+        "auth": {
+          "kind": "mocked",
+          "users": {
+            "aniket": {
+              "roles": [
+                "viewer"
+              ],
+              "userAttributes": {
+                "mycountry": [
+                  "India"
+                ]
+              }
+            },
+            "trump": {
+              "roles": [
+                "editor"
+              ]
+            }
+          }
+        }
+      },
+      "[production]": {
+        "db": "hana",
+        "auth": "xsuaa"
+      }
+    },
+    "sql": {
+      "native_hana_associations": false
+    }
+  }
+}

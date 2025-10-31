@@ -1,0 +1,50 @@
+{
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.viewer",
+      "description": "viewer"
+    },
+    {
+      "name": "$XSAPPNAME.editor",
+      "description": "editor"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "mycountry",
+      "description": "Country attribute to filter movies data",
+      "valueType": "string"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "viewer",
+      "description": "to view movies for your country",
+      "scope-references": [
+        "$XSAPPNAME.viewer"
+      ],
+      "attribute-references": [
+        {
+          "name": "mycountry"
+        }
+      ]
+    },
+    {
+      "name": "editor",
+      "description": "Editing of movies data",
+      "scope-references": [
+        "$XSAPPNAME.editor"
+      ]
+    }
+  ],
+  "authorities": [
+    "$ACCEPT_GRANTED_AUTHORITIES"
+  ],
+  "oauth2-configuration": {
+    "token-validity": 9000,
+    "redirect-uris": [
+      "https://*.cfapps.us10-001.hana.ondemand.com/login/callback"
+    ]
+  },
+  "xsenableasyncservice": "true"
+}

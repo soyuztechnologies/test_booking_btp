@@ -1,0 +1,19 @@
+{
+  "welcomeFile": "webapp/",
+  "authenticationMethod": "route",
+  "sessionTimeout": 10,
+  "pluginMetadataEndpoint": "/metadata",
+  "routes": [
+    {
+      "source": "^/webapp/(.*)",
+      "target": "$1",
+      "localDir": "webapp/",
+      "authenticationType": "xsuaa"
+    },
+    {
+      "source": "^/(.*)$",
+      "destination": "srv-api",
+      "authenticationType": "xsuaa"
+    }
+  ]
+}

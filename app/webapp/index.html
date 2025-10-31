@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>UI5 Movies App</title>
+    
+    <!-- Bootstrap UI5 -->
+    <script
+        id="sap-ui-bootstrap"
+        src="https://ui5.sap.com/resources/sap-ui-core.js"
+        data-sap-ui-theme="sap_horizon"
+        data-sap-ui-libs="sap.m"
+        data-sap-ui-compatVersion="edge"
+        data-sap-ui-async="true"
+        data-sap-ui-resourceroots='{"atsmovie": "./"}'
+        data-sap-ui-oninit="module:sap/ui/core/ComponentSupport">
+    </script>
+</head>
+<body class="sapUiBody" id="content">
+    <div data-sap-ui-component
+        data-name="atsmovie"
+        data-id="container"
+        data-settings='{"id" : "atsmovie"}'
+        data-handle-validation="true">
+    </div>
+
+    <script>
+        sap.ui.getCore().attachInit(function() {
+            // Create app view
+            var oApp = new sap.m.App("myApp", {
+                initialPage: "page1"
+            });
+            
+            // Create page
+            var oPage = new sap.m.Page("page1", {
+                title: "Movies List",
+                content: []
+            });
+            
+            // Add page to app
+            oApp.addPage(oPage);
+            
+            // Create model for OData v4
+            var oModel = new sap.ui.model.odata.v4.ODataModel({
+                serviceUrl: "/odata/v4/CatalogService/",
+                synchronizationMode: "None"
+            });
+            
+            // Create list
+            var oList = new sap.m.List({
+                headerText: "Available Movies",
+                items: {
+                    path: "odata>/MoviesSet",
+                    template: new sap.m.ObjectListItem({
+                        title: "{odata>name}",
+                        intro: "Year: {odata>year}",
+                        icon: "{odata>image}",
+                        firstStatus: new sap.m.ObjectStatus({
+                            text: "{odata>type}"
+                        }),
+                        attributes: [
+                            new sap.m.ObjectAttribute({
+                                text: "Country: {odata>country}"
+                            })
+                        ],
+                        iconDensityAware: false,
+                        iconInset: false
+                    })
+                }
+            });
+            
+            // Set model to the list
+            oList.setModel(oModel, "odata");
+            
+            // Add list to page
+            oPage.addContent(oList);
+            
+            // Place app in HTML document
+            oApp.placeAt("content");
+        });
+    </script>
+</body>
+</html>
